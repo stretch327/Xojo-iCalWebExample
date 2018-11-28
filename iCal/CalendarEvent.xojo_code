@@ -35,17 +35,47 @@ Protected Class CalendarEvent
 
 	#tag Method, Flags = &h0
 		Function Render() As String
+		  
 		  Dim sa() As String
 		  
 		  Dim now As New Date
 		  
 		  sa.Append "BEGIN:VEVENT"
 		  sa.Append "SUMMARY:" + Summary
+		  If trim(Description) <> "" Then
+		    sa.Append "DESCRIPTION:" + Description
+		  End If
 		  sa.Append "UID:" + UID
 		  sa.Append "DTSTAMP:" + ConvertDate(now, True)
 		  sa.Append "DTSTART;VALUE=DATE:" + ConvertDate(StartDate)
-		  sa.Append "DTEND;VALUE=DATE:" + ConvertDate(EndDate)
-		  sa.Append "TRANSP:TRANSPARENT"
+		  If EndDate <> Nil Then
+		    sa.Append "DTEND;VALUE=DATE:" + ConvertDate(EndDate)
+		  ElseIf mDuration > 0 Then
+		    sa.Append "DURATION:PT" + str(Duration, "0") + "M"
+		  Else
+		    Dim ex As New UnsupportedOperationException
+		    ex.Message = "You must either specify an end date or a duration!"
+		    Raise ex
+		  End If
+		  If UBound(Categories) > -1 Then
+		    sa.Append "CATEGORIES:" + Uppercase(join(Categories, ","))
+		  End If
+		  If Not Busy Then
+		    sa.Append "TRANSP:TRANSPARENT"
+		  End If
+		  If trim(location) <> "" Then
+		    sa.Append "LOCATION:" + Location
+		  End If
+		  
+		  Select Case status
+		  Case Statuses.Cancelled
+		    sa.Append "STATUS:CANCELLED")
+		  Case Statuses.Confirmed
+		    sa.Append "STATUS:CONFIRMED")
+		  Case Statuses.Tentative
+		    sa.Append "STATUS:TENTATIVE")
+		  End Select
+		  
 		  sa.Append "END:VEVENT"
 		  
 		  return join(sa,EndOfLine)
@@ -54,7 +84,57 @@ Protected Class CalendarEvent
 
 
 	#tag Property, Flags = &h0
+		Busy As Boolean = False
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Categories() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Description As String
+	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  Return mDuration
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mDuration = value
+			  mEndDate = nil
+			End Set
+		#tag EndSetter
+		DurationMinutes As Integer
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  Return mEndDate
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mEndDate = value
+			  mDuration = 0
+			End Set
+		#tag EndSetter
 		EndDate As Date
+	#tag EndComputedProperty
+
+	#tag Property, Flags = &h0
+		Location As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDuration As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mEndDate As Date
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -63,6 +143,10 @@ Protected Class CalendarEvent
 
 	#tag Property, Flags = &h0
 		StartDate As Date
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Status As Statuses
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -82,6 +166,14 @@ Protected Class CalendarEvent
 		#tag EndSetter
 		UID As String
 	#tag EndComputedProperty
+
+
+	#tag Enum, Name = Statuses, Type = Integer, Flags = &h0
+		Unknown
+		  Confirmed
+		  Tentative
+		Cancelled
+	#tag EndEnum
 
 
 	#tag ViewBehavior
@@ -128,6 +220,7 @@ Protected Class CalendarEvent
 			Name="UID"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
