@@ -16,9 +16,9 @@ Inherits WebApplication
 		  
 		  Dim endDate As New Date
 		  endDate.Day = endDate.Day + 1
-		  d.Hour = 10
-		  d.Minute = 0
-		  d.Second = 0
+		  endDate.Hour = 10
+		  endDate.Minute = 0
+		  endDate.Second = 0
 		  
 		  // If you don't provide a UID, the class will create one for you
 		  // which you must use again if you want to make changes
