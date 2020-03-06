@@ -51,7 +51,7 @@ Protected Class CalendarEvent
 		  If EndDate <> Nil Then
 		    sa.Append "DTEND;VALUE=DATE:" + ConvertDate(EndDate)
 		  ElseIf mDuration > 0 Then
-		    sa.Append "DURATION:PT" + str(Duration, "0") + "M"
+		    sa.Append "DURATION:PT" + Str(DurationMinutes, "0") + "M"
 		  Else
 		    Dim ex As New UnsupportedOperationException
 		    ex.Message = "You must either specify an end date or a duration!"
@@ -69,11 +69,11 @@ Protected Class CalendarEvent
 		  
 		  Select Case status
 		  Case Statuses.Cancelled
-		    sa.Append "STATUS:CANCELLED")
+		    sa.Append ("STATUS:CANCELLED")
 		  Case Statuses.Confirmed
-		    sa.Append "STATUS:CONFIRMED")
+		    sa.Append ("STATUS:CONFIRMED")
 		  Case Statuses.Tentative
-		    sa.Append "STATUS:TENTATIVE")
+		    sa.Append ("STATUS:TENTATIVE")
 		  End Select
 		  
 		  sa.Append "END:VEVENT"
