@@ -1,6 +1,12 @@
 #tag Class
 Protected Class Calendar
 	#tag Method, Flags = &h0
+		Sub AddEvent(CE as CalendarEvent)
+		  events.Append CE
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub AddEvent(Summary as String, StartDate as Date, EndDate as Date, UID as String = "")
 		  events.Append new CalendarEvent(Summary, StartDate, EndDate, UID)
 		End Sub
@@ -56,7 +62,9 @@ Protected Class Calendar
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -64,12 +72,15 @@ Protected Class Calendar
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -77,6 +88,7 @@ Protected Class Calendar
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -84,29 +96,31 @@ Protected Class Calendar
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Description"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ProductName"
-			Group="Behavior"
-			InitialValue="Generic"
-			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LanguageCode"
+			Visible=false
 			Group="Behavior"
 			InitialValue="EN"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="RefreshMinutes"
+			Visible=false
 			Group="Behavior"
 			InitialValue="15"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
