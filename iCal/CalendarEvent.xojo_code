@@ -1,8 +1,8 @@
 #tag Class
 Protected Class CalendarEvent
 	#tag Method, Flags = &h0
-		Sub Constructor(Summary as String, StartDate as Date, EndDate as Date, UID as String = "")
-		  self.summary = summary
+		Sub Constructor(Summary as String, StartDate as DateTime, EndDate as DateTime, UID as String = "")
+		  Self.summary = summary
 		  Self.startdate = startdate
 		  Self.enddate = enddate
 		  
@@ -47,9 +47,20 @@ Protected Class CalendarEvent
 		  End If
 		  sa.Append "UID:" + UID
 		  sa.Append "DTSTAMP:" + ConvertDate(now, True)
-		  sa.Append "DTSTART;VALUE=DATE:" + ConvertDate(StartDate)
+		  
+		  If AllDay Then
+		    sa.Append "DTSTART;VALUE=DATE:" + ConvertDate(StartDate, False)
+		  Else
+		    sa.Append "DTSTART;VALUE=DATE:" + ConvertDate(StartDate, True)
+		  End If
+		  
 		  If EndDate <> Nil Then
-		    sa.Append "DTEND;VALUE=DATE:" + ConvertDate(EndDate)
+		    If Allday Then
+		      //Enddates have to be 1 day later
+		      sa.Append "DTEND;VALUE=DATE:" + ConvertDate(EndDate.AddInterval(0,0,1), False)
+		    Else
+		      sa.Append "DTEND;VALUE=DATE:" + ConvertDate(EndDate, True)
+		    End If
 		  ElseIf mDuration > 0 Then
 		    sa.Append "DURATION:PT" + Str(DurationMinutes, "0") + "M"
 		  Else
@@ -82,6 +93,10 @@ Protected Class CalendarEvent
 		End Function
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h0
+		AllDay As Boolean = False
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		Busy As Boolean = False
@@ -122,7 +137,7 @@ Protected Class CalendarEvent
 			  mDuration = 0
 			End Set
 		#tag EndSetter
-		EndDate As Date
+		EndDate As DateTime
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h0
@@ -134,7 +149,7 @@ Protected Class CalendarEvent
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mEndDate As Date
+		Private mEndDate As DateTime
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -142,7 +157,7 @@ Protected Class CalendarEvent
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		StartDate As Date
+		StartDate As DateTime
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -181,7 +196,9 @@ Protected Class CalendarEvent
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -189,12 +206,15 @@ Protected Class CalendarEvent
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -202,6 +222,7 @@ Protected Class CalendarEvent
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -209,18 +230,69 @@ Protected Class CalendarEvent
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Summary"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="UID"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Busy"
+			Visible=false
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Description"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="DurationMinutes"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Location"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Status"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Statuses"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - Unknown"
+				"1 - Confirmed"
+				"2 - Tentative"
+				"3 - Cancelled"
+			#tag EndEnumValues
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
