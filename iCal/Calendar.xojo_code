@@ -31,7 +31,7 @@ Protected Class Calendar
 		  
 		  sa.Append "END:VCALENDAR"
 		  
-		  Return join(sa, EndOfLine)
+		  Return join(sa, EndOfLine.Windows) //Line endings have to be CRLF
 		End Function
 	#tag EndMethod
 

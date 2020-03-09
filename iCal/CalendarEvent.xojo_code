@@ -89,7 +89,7 @@ Protected Class CalendarEvent
 		  
 		  sa.Append "END:VEVENT"
 		  
-		  return join(sa,EndOfLine)
+		  return join(sa,EndOfLine.Windows) //Line endings have to be CRLF
 		End Function
 	#tag EndMethod
 
