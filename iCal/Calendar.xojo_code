@@ -23,7 +23,7 @@ Protected Class Calendar
 		  sa.Append "X-WR-CALNAME:" + Description
 		  
 		  // Chose UTC because it's so easy to change Xojo dates to that and then there's no ambiguity
-		  sa.Append "X-WR-TIMEZONE:UTC"
+		  sa.Append "X-WR-TIMEZONE:" + Timezone
 		  
 		  For i As Integer = 0 To UBound(events)
 		    sa.append events(i).render()
@@ -54,6 +54,10 @@ Protected Class Calendar
 
 	#tag Property, Flags = &h0
 		RefreshMinutes As Integer = 15
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Timezone As String = "UTC"
 	#tag EndProperty
 
 
@@ -121,6 +125,14 @@ Protected Class Calendar
 			InitialValue="15"
 			Type="Integer"
 			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Timezone"
+			Visible=false
+			Group="Behavior"
+			InitialValue="UTC"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
