@@ -15,18 +15,26 @@ Protected Class CalendarEvent
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
-		Private Function ConvertDate(d as date, includeTime as Boolean = False) As String
+		Private Function ConvertDate(d as DateTime, includeTime as Boolean = False) As String
 		  Dim sa() As String
-		  sa.Append str(d.Year, "0")
-		  sa.Append str(d.Month, "00")
-		  sa.Append str(d.Day, "00")
+		  
+		  Dim UTCDate As DateTime
+		  If includeTime And d.Timezone <> Nil And d.Timezone.Abbreviation <> "UTC" Then //convert the DateTime to UTC if needed
+		    UTCDate = New DateTime(d.SecondsFrom1970, New Timezone("UTC"))
+		  Else
+		    UTCDate = New DateTime(d.SecondsFrom1970)
+		  End If
+		  
+		  sa.Append Str(UTCDate.Year, "0")
+		  sa.Append Str(UTCDate.Month, "00")
+		  sa.Append Str(UTCDate.Day, "00")
 		  
 		  If includeTime Then
 		    sa.Append "T"
-		    sa.Append str(d.Hour, "00")
-		    sa.Append str(d.Minute, "00")
-		    sa.Append str(d.Second, "00")
-		    sa.Append "Z"
+		    sa.Append Str(UTCDate.Hour, "00")
+		    sa.Append Str(UTCDate.Minute, "00")
+		    sa.Append Str(UTCDate.Second, "00")
+		    sa.Append "Z" //Z defines that the DATE-TIME is represented in UTC
 		  End If
 		  
 		  return join(sa,"")
@@ -293,6 +301,14 @@ Protected Class CalendarEvent
 				"2 - Tentative"
 				"3 - Cancelled"
 			#tag EndEnumValues
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="AllDay"
+			Visible=false
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
