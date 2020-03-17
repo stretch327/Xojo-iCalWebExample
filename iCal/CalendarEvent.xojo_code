@@ -51,7 +51,7 @@ Protected Class CalendarEvent
 		  sa.Append "BEGIN:VEVENT"
 		  sa.Append "SUMMARY:" + Summary
 		  If trim(Description) <> "" Then
-		    sa.Append "DESCRIPTION:" + Description
+		    sa.Append "DESCRIPTION:" + Description.EscapeSpecialCharacters
 		  End If
 		  sa.Append "UID:" + UID
 		  sa.Append "DTSTAMP:" + ConvertDate(now, True)
@@ -59,7 +59,7 @@ Protected Class CalendarEvent
 		  If AllDay Then
 		    sa.Append "DTSTART;VALUE=DATE:" + ConvertDate(StartDate, False)
 		  Else
-		    sa.Append "DTSTART;VALUE=DATE:" + ConvertDate(StartDate, True)
+		    sa.Append "DTSTART:" + ConvertDate(StartDate, True)
 		  End If
 		  
 		  If EndDate <> Nil Then
@@ -67,7 +67,7 @@ Protected Class CalendarEvent
 		      //Enddates have to be 1 day later
 		      sa.Append "DTEND;VALUE=DATE:" + ConvertDate(EndDate.AddInterval(0,0,1), False)
 		    Else
-		      sa.Append "DTEND;VALUE=DATE:" + ConvertDate(EndDate, True)
+		      sa.Append "DTEND:" + ConvertDate(EndDate, True)
 		    End If
 		  ElseIf mDuration > 0 Then
 		    sa.Append "DURATION:PT" + Str(DurationMinutes, "0") + "M"
