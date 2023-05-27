@@ -2,32 +2,27 @@
 Protected Class App
 Inherits WebApplication
 	#tag Event
-		Function HandleSpecialURL(Request As WebRequest) As Boolean
-		  Dim cal As New iCal.Calendar
+		Function HandleURL(Request As WebRequest, Response As WebResponse) As Boolean
+		  Var cal As New iCal.Calendar
 		  
 		  cal.Name = "My Calendar"
 		  cal.Description = "Corporate Event Calendar for ABC Tools"
 		  
-		  Dim d As New Date
-		  d.Day = d.Day + 1 // tomorrow
-		  d.Hour = 9 // 9AM
-		  d.Minute = 0
-		  d.Second = 0
+		  Var now As DateTime = DateTime.Now
 		  
-		  Dim endDate As New Date
-		  endDate.Day = endDate.Day + 1
-		  endDate.Hour = 10
-		  endDate.Minute = 0
-		  endDate.Second = 0
+		  Var startDate As New DateTime(now.Year, now.Month, now.Day+1, 9, 0, 0) // 9 AM Tomorrow
+		  
+		  Var meetingLength As New DateInterval(0, 0, 0, 1) // 1 hour
+		  Var endDate As DateTime = startDate + meetingLength
 		  
 		  // If you don't provide a UID, the class will create one for you
 		  // which you must use again if you want to make changes
-		  cal.AddEvent("Meeting", d, endDate, "CalendarTag") 
+		  cal.AddEvent("Meeting", startDate, endDate, "CalendarTag") 
 		  
-		  request.Header("Content-Type") = "text/calendar"
-		  request.Header("Content-Disposition") = "attachment; filename=""" + cal.Name + ".ics"
-		  Request.Print cal.Render
-		  request.Status = 200
+		  Response.Header("Content-Type") = "text/calendar"
+		  Response.Header("Content-Disposition") = "attachment; filename=""" + cal.Name + ".ics"
+		  Response.Write cal.Render
+		  Response.Status = 200
 		  Return True
 		End Function
 	#tag EndEvent

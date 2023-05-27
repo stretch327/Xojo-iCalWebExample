@@ -1,98 +1,98 @@
 #tag Class
 Protected Class Session
 Inherits WebSession
-	#tag Constant, Name = ErrorDialogCancel, Type = String, Dynamic = True, Default = \"Do Not Send", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = ErrorDialogMessage, Type = String, Dynamic = True, Default = \"This application has encountered an error and cannot continue.", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = ErrorDialogQuestion, Type = String, Dynamic = True, Default = \"Please describe what you were doing right before the error occurred:", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = ErrorDialogSubmit, Type = String, Dynamic = True, Default = \"Send", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = ErrorThankYou, Type = String, Dynamic = True, Default = \"Thank You", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = ErrorThankYouMessage, Type = String, Dynamic = True, Default = \"Your feedback helps us make improvements.", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = NoJavascriptInstructions, Type = String, Dynamic = True, Default = \"To turn Javascript on\x2C please refer to your browser settings window.", Scope = Public
-	#tag EndConstant
-
-	#tag Constant, Name = NoJavascriptMessage, Type = String, Dynamic = True, Default = \"Javascript must be enabled to access this page.", Scope = Public
-	#tag EndConstant
-
-
+#tag Session
+  interruptmessage=We are having trouble communicating with the server. Please wait a moment while we attempt to reconnect.
+  disconnectmessage=You have been disconnected from this application.
+  confirmmessage=
+  AllowTabOrderWrap=True
+#tag EndSession
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="ActiveConnectionCount"
+			Name="UserTimeout"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Browser"
+			Name="DisconnectMessage"
+			Visible=true
 			Group="Behavior"
-			Type="BrowserType"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - Unknown"
-				"1 - Safari"
-				"2 - Chrome"
-				"3 - Firefox"
-				"4 - InternetExplorer"
-				"5 - Opera"
-				"6 - ChromeOS"
-				"7 - SafariMobile"
-				"8 - Android"
-				"9 - Blackberry"
-				"10 - OperaMini"
-				"11 - Epiphany"
-			#tag EndEnumValues
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="BrowserVersion"
-			Group="Behavior"
+			InitialValue="You have been disconnected from this application."
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="ConfirmMessage"
+			Name="InterruptionMessage"
+			Visible=true
 			Group="Behavior"
+			InitialValue="We are having trouble communicating with the server. Please wait a moment while we attempt to reconnect."
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Connection"
+			Name="_LastMessageTime"
+			Visible=false
 			Group="Behavior"
-			Type="ConnectionType"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - AJAX"
-				"1 - WebSocket"
-			#tag EndEnumValues
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="GMTOffset"
-			Group="Behavior"
+			InitialValue=""
 			Type="Double"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="AllowTabOrderWrap"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ConfirmDisconnectMessage"
+			Visible=true
+			Group="Behavior"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="IsDarkMode"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ClientHeight"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ClientWidth"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HashTag"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="HeaderCount"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Identifier"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -102,17 +102,23 @@ Inherits WebSession
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LanguageCode"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LanguageRightToLeft"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -120,23 +126,23 @@ Inherits WebSession
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="PageCount"
-			Group="Behavior"
-			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Platform"
+			Visible=false
 			Group="Behavior"
-			Type="PlatformType"
-			EditorType="Enum"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
 			#tag EnumValues
 				"0 - Unknown"
 				"1 - Macintosh"
@@ -155,58 +161,28 @@ Inherits WebSession
 			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Protocol"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="RemoteAddress"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="RenderingEngine"
-			Group="Behavior"
-			Type="EngineType"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - Unknown"
-				"1 - WebKit"
-				"2 - Gecko"
-				"3 - Trident"
-				"4 - Presto"
-				"5 - EdgeHTML"
-			#tag EndEnumValues
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ScaleFactor"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Double"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="StatusMessage"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Timeout"
-			Group="Behavior"
-			Type="Integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Title"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -214,39 +190,23 @@ Inherits WebSession
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="URL"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="_baseurl"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="_Expiration"
-			Group="Behavior"
-			InitialValue="-1"
-			Type="Double"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="_hasQuit"
-			Group="Behavior"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="_mConnection"
-			Group="Behavior"
-			Type="ConnectionType"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - AJAX"
-				"1 - WebSocket"
-			#tag EndEnumValues
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
